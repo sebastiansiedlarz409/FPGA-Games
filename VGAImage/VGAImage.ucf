@@ -2,6 +2,7 @@ CONFIG VCCAUX = "3.3";
 
 # Clock 12 MHz
 NET "SCL"                LOC = P129  | IOSTANDARD = LVCMOS33 | PERIOD = 12MHz;
+NET "RST"                LOC = P76   |PULLUP | IOSTANDARD = LVCMOS33 | PERIOD = 12MHz;
 
 # data bus
 NET "ROWS[0]"             LOC = P10   | IOSTANDARD = LVCMOS33 | SLEW = SLOW | DRIVE = 12;

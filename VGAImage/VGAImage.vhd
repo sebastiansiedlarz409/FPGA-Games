@@ -13,6 +13,7 @@ use UNISIM.VComponents.all;
 entity VGAImage is
 	port(
 		SCL: in STD_LOGIC;
+		RST: in STD_LOGIC;
 		SEG1_EN: out STD_LOGIC;
 		SEG2_EN: out STD_LOGIC;
 		SEG3_EN: out STD_LOGIC;
@@ -67,6 +68,7 @@ signal COUNTER: integer := 0;
 
 --player
 signal PLAYER: STD_LOGIC := '0';
+signal RESULT: STD_LOGIC := '0';
 
 --fieldmap
 signal FIELD_MAP_PLUS: STD_LOGIC_VECTOR(8 DOWNTO 0) := b"000000000";
@@ -394,6 +396,74 @@ if rising_edge(SCL_PLL) then
 		end if;
 	end if;
 	
+	--CHECK IF WIN
+	if (FIELD_MAP_PLUS and b"000000111") = b"000000111" then
+		FIELD_MAP_PLUS <= b"000000111";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"000111000") = b"000111000" then
+		FIELD_MAP_PLUS <= b"000111000";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"111000000") = b"111000000" then
+		FIELD_MAP_PLUS <= b"111000000";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"001001001") = b"001001001" then
+		FIELD_MAP_PLUS <= b"001001001";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"010010010") = b"010010010" then
+		FIELD_MAP_PLUS <= b"010010010";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"100100100") = b"100100100" then
+		FIELD_MAP_PLUS <= b"100100100";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"100010001") = b"100010001" then
+		FIELD_MAP_PLUS <= b"100010001";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_PLUS and b"001010100") = b"001010100" then
+		FIELD_MAP_PLUS <= b"001010100";
+		FIELD_MAP_MINUS <= b"000000000";
+		RESULT <= '1';
+	end if;
+	if (FIELD_MAP_MINUS and b"000000111") = b"000000111" then
+		FIELD_MAP_MINUS <= b"000000111";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"000111000") = b"000111000" then
+		FIELD_MAP_MINUS <= b"000111000";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"111000000") = b"111000000" then
+		FIELD_MAP_MINUS <= b"111000000";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"001001001") = b"001001001" then
+		FIELD_MAP_MINUS <= b"001001001";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"010010010") = b"010010010" then
+		FIELD_MAP_MINUS <= b"010010010";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"100100100") = b"100100100" then
+		FIELD_MAP_MINUS <= b"100100100";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"100010001") = b"100010001" then
+		FIELD_MAP_MINUS <= b"100010001";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	elsif (FIELD_MAP_MINUS and b"001010100") = b"001010100" then
+		FIELD_MAP_MINUS <= b"001010100";
+		FIELD_MAP_PLUS <= b"000000000";
+		RESULT <= '1';
+	end if;
+	
 	--row
 	if x < 640 then
 	hsync <= '1';
@@ -440,7 +510,16 @@ if rising_edge(SCL_PLL) then
 
 end if;
 
+if RST = '0' then
+	FIELD_MAP_PLUS <= b"000000000";
+	FIELD_MAP_MINUS <= b"000000000";
+	KEYP <= 0;
+	KEY <= 0;
+	PLAYER <= '0';
+end if;
+
 end process;
+
 --keyboard process end
 
 --width: 640px
