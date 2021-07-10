@@ -195,10 +195,10 @@ begin
 	--plus for 7
 	if FIELD_MAP_PLUS(6) = '1' then
 		
-		if(x > 90 and x < 110) and (y < 460 and y > 340) then
+		if(x > 90 and x < 110) and (y < 440 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and (x < 160 and x > 40) then
+		if(y > 380 and y < 400) and (x < 160 and x > 40) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -206,10 +206,10 @@ begin
 	--plus for 8
 	if FIELD_MAP_PLUS(7) = '1' then
 		
-		if(x > 310 and x < 330) and (y < 460 and y > 340) then
+		if(x > 310 and x < 330) and (y < 440 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and (x < 380 and x > 260) then
+		if(y > 380 and y < 400) and (x < 380 and x > 260) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -217,10 +217,10 @@ begin
 	--plus for 9
 	if FIELD_MAP_PLUS(8) = '1' then
 		
-		if(x > 530 and x < 550) and (y < 460 and y > 340) then
+		if(x > 530 and x < 550) and (y < 440 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and (x < 600 and x > 480) then
+		if(y > 380 and y < 400) and (x < 600 and x > 480) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -277,7 +277,7 @@ begin
 	--minus for 7
 	if FIELD_MAP_MINUS(6) = '1' then
 		
-		if(y > 390 and y < 410) and (x < 160 and x > 40) then
+		if(y > 380 and y < 400) and (x < 160 and x > 40) then
 			color_inside := b"00011100";
 		end if;
 		
@@ -285,7 +285,7 @@ begin
 	--minus for 8
 	if FIELD_MAP_MINUS(7) = '1' then
 		
-		if(y > 390 and y < 410) and (x < 380 and x > 260) then
+		if(y > 380 and y < 400) and (x < 380 and x > 260) then
 			color_inside := b"00011100";
 		end if;
 		
@@ -293,7 +293,7 @@ begin
 	--minus for 9
 	if FIELD_MAP_MINUS(8) = '1' then
 		
-		if(y > 390 and y < 410) and (x < 600 and x > 480) then
+		if(y > 380 and y < 400) and (x < 600 and x > 480) then
 			color_inside := b"00011100";
 		end if;
 		

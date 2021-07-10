@@ -1,0 +1,680 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.08 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.08 secs
+ 
+--> 
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.08 secs
+ 
+--> 
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "VGAImage.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "VGAImage"
+Output Format                      : NGC
+Target Device                      : xc3s50a-5-tq144
+
+---- Source Options
+Top Module Name                    : VGAImage
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "VGAImagePLL.v" in library work
+Compiling verilog file "clock.v" in library work
+Module <VGAImagePLL> compiled
+Module <clock> compiled
+No errors in compilation
+Analysis of file <"VGAImage.prj"> succeeded.
+ 
+Compiling vhdl file "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd" in Library work.
+WARNING:HDLParsers:3310 - "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd" Line 335. Function DRAW_FIELD is not pure.  VHDL 87 allowed this; VHDL 93 requires the keyword IMPURE.
+Architecture behavioral of Entity vgaimage is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <VGAImage> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for module <VGAImagePLL> in library <work>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <VGAImage> in library <work> (Architecture <behavioral>).
+WARNING:Xst:753 - "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd" line 339: Unconnected output port 'CLKIN_IBUFG_OUT' of component 'VGAImagePLL'.
+WARNING:Xst:753 - "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd" line 339: Unconnected output port 'CLK0_OUT' of component 'VGAImagePLL'.
+WARNING:Xst:753 - "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd" line 339: Unconnected output port 'LOCKED_OUT' of component 'VGAImagePLL'.
+Entity <VGAImage> analyzed. Unit <VGAImage> generated.
+
+Analyzing module <VGAImagePLL> in library <work>.
+Module <VGAImagePLL> is correct for synthesis.
+ 
+    Set user-defined property "CAPACITANCE =  DONT_CARE" for instance <CLKIN_IBUFG_INST> in unit <VGAImagePLL>.
+    Set user-defined property "IBUF_DELAY_VALUE =  0" for instance <CLKIN_IBUFG_INST> in unit <VGAImagePLL>.
+    Set user-defined property "IBUF_LOW_PWR =  TRUE" for instance <CLKIN_IBUFG_INST> in unit <VGAImagePLL>.
+    Set user-defined property "IOSTANDARD =  DEFAULT" for instance <CLKIN_IBUFG_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKDV_DIVIDE =  2.000000" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKFX_DIVIDE =  12" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKFX_MULTIPLY =  25" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKIN_DIVIDE_BY_2 =  FALSE" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKIN_PERIOD =  83.333000" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLKOUT_PHASE_SHIFT =  NONE" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "CLK_FEEDBACK =  1X" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "DESKEW_ADJUST =  SYSTEM_SYNCHRONOUS" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "DFS_FREQUENCY_MODE =  LOW" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "DLL_FREQUENCY_MODE =  LOW" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "DSS_MODE =  NONE" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "DUTY_CYCLE_CORRECTION =  TRUE" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "FACTORY_JF =  C080" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "PHASE_SHIFT =  0" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+    Set user-defined property "STARTUP_WAIT =  FALSE" for instance <DCM_SP_INST> in unit <VGAImagePLL>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <VGAImagePLL>.
+    Related source file is "VGAImagePLL.v".
+Unit <VGAImagePLL> synthesized.
+
+
+Synthesizing Unit <VGAImage>.
+    Related source file is "C:/Users/siedl/Desktop/PlusMinus/VGAImage/VGAImage.vhd".
+WARNING:Xst:653 - Signal <sync_ver> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000000010.
+WARNING:Xst:653 - Signal <sync_hor> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000001100000.
+WARNING:Xst:653 - Signal <fporch_ver> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000001010.
+WARNING:Xst:653 - Signal <fporch_hor> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000010000.
+WARNING:Xst:653 - Signal <bporch_ver> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000100001.
+WARNING:Xst:653 - Signal <bporch_hor> is used but never assigned. This sourceless signal will be automatically connected to value 00000000000000000000000000110000.
+    Using one-hot encoding for signal <KEYP>.
+INFO:Xst:2117 - HDL ADVISOR - Mux Selector <KEY> of Case statement line 0 was re-encoded using one-hot encoding. The case statement will be optimized (default statement optimization), but this optimization may lead to design initialization problems. To ensure the design works safely, you can:
+   	- add an 'INIT' attribute on signal <KEY> (optimization is then done without any risk)
+   	- use the attribute 'signal_encoding user' to avoid onehot optimization
+   	- use the attribute 'safe_implementation yes' to force XST to perform a safe (but less efficient) optimization
+    Using one-hot encoding for signal <KEY>.
+    Found 1-bit register for signal <hsync>.
+    Found 1-bit register for signal <vsync>.
+    Found 3-bit register for signal <red>.
+    Found 3-bit register for signal <green>.
+    Found 2-bit register for signal <blue>.
+    Found 32-bit adder for signal <add0000$add0001> created at line 448.
+    Found 32-bit adder for signal <add0001$add0001> created at line 464.
+    Found 8-bit register for signal <color>.
+    Found 32-bit comparator less for signal <color$cmp_lt0000> created at line 430.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0000> created at line 153.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0001> created at line 153.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0002> created at line 148.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0003> created at line 148.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0004> created at line 163.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0005> created at line 163.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0006> created at line 160.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0007> created at line 160.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0008> created at line 174.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0009> created at line 171.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0010> created at line 185.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0011> created at line 182.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0012> created at line 196.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0013> created at line 193.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0014> created at line 229.
+    Found 32-bit comparator greater for signal <color_inside$cmp_gt0015> created at line 226.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0000> created at line 153.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0001> created at line 153.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0002> created at line 148.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0003> created at line 148.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0004> created at line 163.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0005> created at line 163.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0006> created at line 160.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0007> created at line 160.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0008> created at line 174.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0009> created at line 171.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0010> created at line 185.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0011> created at line 182.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0012> created at line 196.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0013> created at line 193.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0014> created at line 229.
+    Found 32-bit comparator less for signal <color_inside$cmp_lt0015> created at line 226.
+    Found 32-bit register for signal <COUNTER>.
+    Found 32-bit comparator lessequal for signal <COUNTER$cmp_le0000> created at line 402.
+    Found 32-bit comparator less for signal <COUNTER$cmp_lt0000> created at line 388.
+    Found 32-bit comparator less for signal <COUNTER$cmp_lt0001> created at line 374.
+    Found 32-bit comparator less for signal <COUNTER$cmp_lt0002> created at line 360.
+    Found 32-bit adder for signal <COUNTER$mux0005>.
+    Found 9-bit register for signal <FIELD_MAP_MINUS>.
+    Found 9-bit register for signal <FIELD_MAP_PLUS>.
+    Found 32-bit adder for signal <hsync$add0000> created at line 445.
+    Found 32-bit comparator less for signal <hsync$cmp_lt0000> created at line 445.
+    Found 14-bit register for signal <KEY>.
+    Found 32-bit comparator greatequal for signal <KEY$cmp_ge0000> created at line 388.
+    Found 32-bit comparator greatequal for signal <KEY$cmp_ge0001> created at line 374.
+    Found 32-bit comparator greatequal for signal <KEY$cmp_ge0002> created at line 360.
+    Found 32-bit comparator greatequal for signal <KEY$cmp_ge0003> created at line 350.
+    Found 14-bit register for signal <KEYP>.
+    Found 8-bit register for signal <L>.
+    Found 1-bit register for signal <PLAYER>.
+    Found 4-bit register for signal <R>.
+    Found 32-bit comparator less for signal <R$cmp_lt0000> created at line 350.
+    Found 8-bit register for signal <S1>.
+    Found 32-bit adder for signal <vsync$addsub0000> created at line 462.
+    Found 32-bit comparator less for signal <vsync$cmp_lt0000> created at line 462.
+    Found 32-bit register for signal <x>.
+    Found 32-bit adder for signal <x$add0000> created at line 448.
+    Found 32-bit adder for signal <x$add0001> created at line 462.
+    Found 32-bit adder for signal <x$add0002> created at line 464.
+    Found 32-bit adder for signal <x$addsub0000> created at line 445.
+    Found 32-bit adder for signal <x$addsub0001> created at line 448.
+    Found 32-bit adder for signal <x$addsub0002> created at line 464.
+    Found 32-bit comparator less for signal <x$cmp_lt0000> created at line 439.
+    Found 32-bit comparator less for signal <x$cmp_lt0001> created at line 445.
+    Found 32-bit comparator less for signal <x$cmp_lt0002> created at line 448.
+    Found 32-bit comparator less for signal <x$cmp_lt0003> created at line 459.
+    Found 32-bit comparator less for signal <x$cmp_lt0004> created at line 460.
+    Found 32-bit comparator less for signal <x$cmp_lt0005> created at line 462.
+    Found 32-bit comparator less for signal <x$cmp_lt0006> created at line 464.
+    Found 32-bit adder for signal <x$share0000> created at line 430.
+    Found 32-bit register for signal <y>.
+    Found 32-bit comparator greatequal for signal <y$cmp_ge0000> created at line 462.
+    Found 32-bit comparator greatequal for signal <y$cmp_ge0001> created at line 460.
+    Found 32-bit comparator greatequal for signal <y$cmp_ge0002> created at line 459.
+    Found 32-bit adder for signal <y$mux0000>.
+    Summary:
+	inferred 181 D-type flip-flop(s).
+	inferred  13 Adder/Subtractor(s).
+	inferred  54 Comparator(s).
+Unit <VGAImage> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 13
+ 32-bit adder                                          : 13
+# Registers                                            : 33
+ 1-bit register                                        : 21
+ 14-bit register                                       : 2
+ 2-bit register                                        : 1
+ 3-bit register                                        : 2
+ 32-bit register                                       : 3
+ 4-bit register                                        : 1
+ 8-bit register                                        : 3
+# Comparators                                          : 54
+ 32-bit comparator greatequal                          : 7
+ 32-bit comparator greater                             : 16
+ 32-bit comparator less                                : 30
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_0 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_1 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_2 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_3 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_4 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_5 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_6 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_7 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_8 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_0 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_1 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_2 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_3 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_4 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_5 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_6 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_7 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_8 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:2677 - Node <KEYP_10> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_11> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_12> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_13> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_10> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_11> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_12> of sequential type is unconnected in block <VGAImage>.
+WARNING:Xst:2677 - Node <KEYP_13> of sequential type is unconnected in block <VGAImage>.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 13
+ 32-bit adder                                          : 13
+# Registers                                            : 177
+ Flip-Flops                                            : 177
+# Comparators                                          : 54
+ 32-bit comparator greatequal                          : 7
+ 32-bit comparator greater                             : 16
+ 32-bit comparator less                                : 30
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_0 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_1 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_2 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_3 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_4 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_5 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_6 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_7 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_PLUS_8 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_0 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_1 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_2 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_3 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_4 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_5 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_6 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_7 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch FIELD_MAP_MINUS_8 hinder the constant cleaning in the block VGAImage.
+   You should achieve better results by setting this init to 1.
+
+Optimizing unit <VGAImage> ...
+INFO:Xst:2261 - The FF/Latch <color_5> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <color_6> <color_7> 
+INFO:Xst:2261 - The FF/Latch <red_0> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <red_1> <red_2> 
+INFO:Xst:2261 - The FF/Latch <color_5> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <color_6> <color_7> 
+INFO:Xst:2261 - The FF/Latch <color_2> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <color_3> <color_4> 
+INFO:Xst:2261 - The FF/Latch <red_0> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <red_1> <red_2> 
+INFO:Xst:2261 - The FF/Latch <green_0> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <green_1> <green_2> 
+INFO:Xst:2261 - The FF/Latch <color_2> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <color_3> <color_4> 
+INFO:Xst:2261 - The FF/Latch <color_5> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <color_6> <color_7> 
+INFO:Xst:2261 - The FF/Latch <green_0> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <green_1> <green_2> 
+INFO:Xst:2261 - The FF/Latch <red_0> in Unit <VGAImage> is equivalent to the following 2 FFs/Latches, which will be removed : <red_1> <red_2> 
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block VGAImage, actual ratio is 65.
+FlipFlop x_10 has been replicated 1 time(s)
+FlipFlop x_11 has been replicated 1 time(s)
+FlipFlop x_12 has been replicated 1 time(s)
+FlipFlop x_13 has been replicated 1 time(s)
+FlipFlop x_14 has been replicated 1 time(s)
+FlipFlop x_15 has been replicated 1 time(s)
+FlipFlop x_16 has been replicated 1 time(s)
+FlipFlop x_17 has been replicated 1 time(s)
+FlipFlop x_18 has been replicated 1 time(s)
+FlipFlop x_19 has been replicated 1 time(s)
+FlipFlop x_20 has been replicated 1 time(s)
+FlipFlop x_21 has been replicated 1 time(s)
+FlipFlop x_22 has been replicated 1 time(s)
+FlipFlop x_25 has been replicated 1 time(s)
+FlipFlop x_5 has been replicated 1 time(s)
+FlipFlop x_6 has been replicated 1 time(s)
+FlipFlop x_7 has been replicated 1 time(s)
+FlipFlop x_8 has been replicated 1 time(s)
+FlipFlop x_9 has been replicated 1 time(s)
+FlipFlop y_10 has been replicated 1 time(s)
+FlipFlop y_11 has been replicated 1 time(s)
+FlipFlop y_12 has been replicated 1 time(s)
+FlipFlop y_13 has been replicated 1 time(s)
+FlipFlop y_14 has been replicated 1 time(s)
+FlipFlop y_15 has been replicated 1 time(s)
+FlipFlop y_16 has been replicated 1 time(s)
+FlipFlop y_17 has been replicated 1 time(s)
+FlipFlop y_18 has been replicated 1 time(s)
+FlipFlop y_19 has been replicated 1 time(s)
+FlipFlop y_20 has been replicated 1 time(s)
+FlipFlop y_21 has been replicated 1 time(s)
+FlipFlop y_22 has been replicated 1 time(s)
+FlipFlop y_23 has been replicated 1 time(s)
+FlipFlop y_24 has been replicated 1 time(s)
+FlipFlop y_25 has been replicated 1 time(s)
+FlipFlop y_26 has been replicated 1 time(s)
+FlipFlop y_27 has been replicated 1 time(s)
+FlipFlop y_5 has been replicated 1 time(s)
+FlipFlop y_6 has been replicated 1 time(s)
+FlipFlop y_7 has been replicated 1 time(s)
+FlipFlop y_8 has been replicated 1 time(s)
+FlipFlop y_9 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 211
+ Flip-Flops                                            : 211
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : VGAImage.ngr
+Top Level Output File Name         : VGAImage
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 38
+
+Cell Usage :
+# BELS                             : 1553
+#      GND                         : 1
+#      INV                         : 115
+#      LUT1                        : 162
+#      LUT2                        : 114
+#      LUT2_D                      : 5
+#      LUT2_L                      : 3
+#      LUT3                        : 76
+#      LUT3_D                      : 3
+#      LUT3_L                      : 5
+#      LUT4                        : 321
+#      LUT4_D                      : 14
+#      LUT4_L                      : 15
+#      MUXCY                       : 619
+#      MUXF5                       : 3
+#      VCC                         : 1
+#      XORCY                       : 96
+# FlipFlops/Latches                : 211
+#      FD                          : 61
+#      FDE                         : 49
+#      FDR                         : 32
+#      FDRE                        : 56
+#      FDS                         : 8
+#      FDSE                        : 5
+# Clock Buffers                    : 2
+#      BUFG                        : 2
+# IO Buffers                       : 38
+#      IBUF                        : 4
+#      IBUFG                       : 1
+#      OBUF                        : 33
+# DCMs                             : 1
+#      DCM_SP                      : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s50atq144-5 
+
+ Number of Slices:                      469  out of    704    66%  
+ Number of Slice Flip Flops:            211  out of   1408    14%  
+ Number of 4 input LUTs:                833  out of   1408    59%  
+ Number of IOs:                          38
+ Number of bonded IOBs:                  38  out of    108    35%  
+ Number of GCLKs:                         2  out of     24     8%  
+ Number of DCMs:                          1  out of      2    50%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+--------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)    | Load  |
+-----------------------------------+--------------------------+-------+
+SCL                                | vga_pll/DCM_SP_INST:CLKFX| 211   |
+-----------------------------------+--------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 17.218ns (Maximum Frequency: 58.077MHz)
+   Minimum input arrival time before clock: 4.301ns
+   Maximum output required time after clock: 5.429ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'SCL'
+  Clock period: 17.218ns (frequency: 58.077MHz)
+  Total number of paths / destination ports: 50212 / 403
+-------------------------------------------------------------------------
+Delay:               8.265ns (Levels of Logic = 18)
+  Source:            x_1 (FF)
+  Destination:       color_2 (FF)
+  Source Clock:      SCL rising 2.1X
+  Destination Clock: SCL rising 2.1X
+
+  Data Path: x_1 to color_2
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              12   0.495   0.925  x_1 (x_1)
+     LUT1:I0->O            1   0.561   0.000  Mcompar_color_inside_cmp_gt0002_cy<1>_6_rt (Mcompar_color_inside_cmp_gt0002_cy<1>_6_rt)
+     MUXCY:S->O            1   0.523   0.000  Mcompar_color_inside_cmp_gt0002_cy<1>_6 (Mcompar_color_inside_cmp_gt0002_cy<1>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<2>_6 (Mcompar_color_inside_cmp_gt0002_cy<2>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<3>_6 (Mcompar_color_inside_cmp_gt0002_cy<3>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<4>_6 (Mcompar_color_inside_cmp_gt0002_cy<4>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<5>_6 (Mcompar_color_inside_cmp_gt0002_cy<5>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<6>_6 (Mcompar_color_inside_cmp_gt0002_cy<6>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<7>_6 (Mcompar_color_inside_cmp_gt0002_cy<7>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<8>_6 (Mcompar_color_inside_cmp_gt0002_cy<8>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<9>_6 (Mcompar_color_inside_cmp_gt0002_cy<9>7)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<10>_5 (Mcompar_color_inside_cmp_gt0002_cy<10>6)
+     MUXCY:CI->O           1   0.065   0.000  Mcompar_color_inside_cmp_gt0002_cy<11>_4 (Mcompar_color_inside_cmp_gt0002_cy<11>5)
+     MUXCY:CI->O           6   0.179   0.592  Mcompar_color_inside_cmp_gt0002_cy<12>_2 (Mcompar_color_inside_cmp_gt0002_cy<12>3)
+     LUT4:I2->O            1   0.561   0.359  color_inside_mux0010<6>8_SW0 (N671)
+     LUT4:I3->O            1   0.561   0.423  color_inside_mux0010<6>8 (color_inside_mux0010<6>8)
+     LUT4:I1->O            3   0.562   0.453  color_inside_mux0010<6>69 (color_inside_mux0010<6>)
+     LUT4_L:I3->LO         1   0.561   0.102  color_inside_mux0022<3>46_SW1 (N99)
+     LUT4:I3->O            1   0.561   0.000  color_mux0000<3>83 (color_mux0000<3>)
+     FDE:D                     0.197          color_2
+    ----------------------------------------
+    Total                      8.265ns (5.411ns logic, 2.854ns route)
+                                       (65.5% logic, 34.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'SCL'
+  Total number of paths / destination ports: 89 / 28
+-------------------------------------------------------------------------
+Offset:              4.301ns (Levels of Logic = 3)
+  Source:            COLS<0> (PAD)
+  Destination:       KEY_0 (FF)
+  Destination Clock: SCL rising 2.1X
+
+  Data Path: COLS<0> to KEY_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            12   0.824   0.925  COLS_0_IBUF (COLS_0_IBUF)
+     LUT4:I0->O            1   0.561   0.423  KEY_not000129 (KEY_not000129)
+     LUT4:I1->O           14   0.562   0.850  KEY_not000132 (KEY_not0001)
+     FDE:CE                    0.156          KEY_0
+    ----------------------------------------
+    Total                      4.301ns (2.103ns logic, 2.198ns route)
+                                       (48.9% logic, 51.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'SCL'
+  Total number of paths / destination ports: 30 / 30
+-------------------------------------------------------------------------
+Offset:              5.429ns (Levels of Logic = 1)
+  Source:            R_0 (FF)
+  Destination:       ROWS<0> (PAD)
+  Source Clock:      SCL rising 2.1X
+
+  Data Path: R_0 to ROWS<0>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             5   0.495   0.538  R_0 (R_0)
+     OBUF:I->O                 4.396          ROWS_0_OBUF (ROWS<0>)
+    ----------------------------------------
+    Total                      5.429ns (4.891ns logic, 0.538ns route)
+                                       (90.1% logic, 9.9% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 7.23 secs
+ 
+--> 
+
+Total memory usage is 4547156 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   54 (   0 filtered)
+Number of infos    :   12 (   0 filtered)
+
