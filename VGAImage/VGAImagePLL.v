@@ -7,11 +7,11 @@
 // \   \   \/     Version : 14.7
 //  \   \         Application : xaw2verilog
 //  /   /         Filename : VGAImagePLL.v
-// /___/   /\     Timestamp : 07/09/2021 17:02:18
+// /___/   /\     Timestamp : 07/10/2021 10:18:26
 // \   \  /  \ 
 //  \___\/\___\ 
 //
-//Command: xaw2verilog -intstyle C:/Users/siedl/Desktop/FPGA/Projects/VGAImage/ipcore_dir/VGAImagePLL.xaw -st VGAImagePLL.v
+//Command: xaw2verilog -intstyle C:/Users/siedl/Desktop/PlusMinus/VGAImage/ipcore_dir/VGAImagePLL.xaw -st VGAImagePLL.v
 //Design Name: VGAImagePLL
 //Device: xc3s50a-5tq144
 //

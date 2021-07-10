@@ -112,7 +112,7 @@ end INT_TO_VECTOR;
 --this function draw field and player
 function DRAW_FIELD(X : INTEGER; Y: INTEGER) return STD_LOGIC_VECTOR is
 
-	variable color_inside: STD_LOGIC_VECTOR(7 DOWNTO 0) := b"00010000";
+	variable color_inside: STD_LOGIC_VECTOR(7 DOWNTO 0) := b"00000010";
 
 begin
 	
@@ -129,10 +129,10 @@ begin
 	--plus for 1
 	if FIELD_MAP_PLUS(0) = '1' then
 		
-		if(x > 90 and x < 110) and y < 140 then
+		if(x > 90 and x < 110) and (y > 20 and y < 120) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 60 and y < 80) and x < 200 then
+		if(y > 60 and y < 80) and (x > 40 and x < 160) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -140,10 +140,10 @@ begin
 	--plus for 2
 	if FIELD_MAP_PLUS(1) = '1' then
 		
-		if(x > 310 and x < 330) and y < 140 then
+		if(x > 310 and x < 330) and (y > 20 and y < 120) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 60 and y < 80) and (x < 420 and x > 220) then
+		if(y > 60 and y < 80) and (x < 380 and x > 260) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -151,10 +151,10 @@ begin
 	--plus for 3
 	if FIELD_MAP_PLUS(2) = '1' then
 		
-		if(x > 530 and x < 550) and y < 140 then
+		if(x > 530 and x < 550) and (y > 20 and y < 120) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 60 and y < 80) and (x < 680 and x > 440) then
+		if(y > 60 and y < 80) and (x < 600 and x > 480) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -162,10 +162,10 @@ begin
 	--plus for 4
 	if FIELD_MAP_PLUS(3) = '1' then
 		
-		if(x > 90 and x < 110) and (y < 300 and y > 160) then
+		if(x > 90 and x < 110) and (y < 280 and y > 180) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 220 and y < 240) and x < 200 then
+		if(y > 220 and y < 240) and (x < 160 and x > 40) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -173,10 +173,10 @@ begin
 	--plus for 5
 	if FIELD_MAP_PLUS(4) = '1' then
 		
-		if(x > 310 and x < 330) and (y < 300 and y > 160) then
+		if(x > 310 and x < 330) and (y < 280 and y > 180) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 220 and y < 240) and (x < 420 and x > 220) then
+		if(y > 220 and y < 240) and (x < 380 and x > 260) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -184,10 +184,10 @@ begin
 	--plus for 6
 	if FIELD_MAP_PLUS(5) = '1' then
 		
-		if(x > 530 and x < 550) and (y < 300 and y > 160) then
+		if(x > 530 and x < 550) and (y < 280 and y > 180) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 220 and y < 240) and (x < 680 and x > 440) then
+		if(y > 220 and y < 240) and (x < 600 and x > 480) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -195,10 +195,10 @@ begin
 	--plus for 7
 	if FIELD_MAP_PLUS(6) = '1' then
 		
-		if(x > 90 and x < 110) and (y < 480 and y > 320) then
+		if(x > 90 and x < 110) and (y < 460 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and x < 200 then
+		if(y > 390 and y < 410) and (x < 160 and x > 40) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -206,10 +206,10 @@ begin
 	--plus for 8
 	if FIELD_MAP_PLUS(7) = '1' then
 		
-		if(x > 310 and x < 330) and (y < 480 and y > 320) then
+		if(x > 310 and x < 330) and (y < 460 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and (x < 420 and x > 220) then
+		if(y > 390 and y < 410) and (x < 380 and x > 260) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -217,10 +217,10 @@ begin
 	--plus for 9
 	if FIELD_MAP_PLUS(8) = '1' then
 		
-		if(x > 530 and x < 550) and (y < 480 and y > 320) then
+		if(x > 530 and x < 550) and (y < 460 and y > 340) then
 			color_inside := b"11100000";
 		end if;
-		if(y > 390 and y < 410) and (x < 680 and x > 440) then
+		if(y > 390 and y < 410) and (x < 600 and x > 480) then
 			color_inside := b"11100000";
 		end if;
 		
@@ -229,72 +229,72 @@ begin
 	--minus for 1
 	if FIELD_MAP_MINUS(0) = '1' then
 		
-		if(y > 60 and y < 80) and x < 200 then
-			color_inside := b"00000011";
+		if(y > 60 and y < 80) and (x > 40 and x < 160) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 2
 	if FIELD_MAP_MINUS(1) = '1' then
 		
-		if(y > 60 and y < 80) and (x < 420 and x > 220) then
-			color_inside := b"00000011";
+		if(y > 60 and y < 80) and (x < 380 and x > 260) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 3
 	if FIELD_MAP_MINUS(2) = '1' then
 		
-		if(y > 60 and y < 80) and (x < 680 and x > 440) then
-			color_inside := b"00000011";
+		if(y > 60 and y < 80) and (x < 600 and x > 480) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 4
 	if FIELD_MAP_MINUS(3) = '1' then
 		
-		if(y > 220 and y < 240) and x < 200 then
-			color_inside := b"00000011";
+		if(y > 220 and y < 240) and (x < 160 and x > 40) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 5
 	if FIELD_MAP_MINUS(4) = '1' then
 		
-		if(y > 220 and y < 240) and (x < 420 and x > 220) then
-			color_inside := b"00000011";
+		if(y > 220 and y < 240) and (x < 380 and x > 260) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 6
 	if FIELD_MAP_MINUS(5) = '1' then
 		
-		if(y > 220 and y < 240) and (x < 680 and x > 440) then
-			color_inside := b"00000011";
+		if(y > 220 and y < 240) and (x < 600 and x > 480) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 7
 	if FIELD_MAP_MINUS(6) = '1' then
 		
-		if(y > 390 and y < 410) and x < 200 then
-			color_inside := b"00000011";
+		if(y > 390 and y < 410) and (x < 160 and x > 40) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 8
 	if FIELD_MAP_MINUS(7) = '1' then
 		
-		if(y > 390 and y < 410) and (x < 420 and x > 220) then
-			color_inside := b"00000011";
+		if(y > 390 and y < 410) and (x < 380 and x > 260) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
 	--minus for 9
 	if FIELD_MAP_MINUS(8) = '1' then
 		
-		if(y > 390 and y < 410) and (x < 680 and x > 440) then
-			color_inside := b"00000011";
+		if(y > 390 and y < 410) and (x < 600 and x > 480) then
+			color_inside := b"00011100";
 		end if;
 		
 	end if;
