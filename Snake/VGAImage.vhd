@@ -23,7 +23,6 @@ entity VGAImage is
 		SEG2_EN: out STD_LOGIC;
 		SEG3_EN: out STD_LOGIC;
 		SEG1: out STD_LOGIC_VECTOR(7 DOWNTO 0);
-		LED: out STD_LOGIC_VECTOR(7 DOWNTO 0);
 		hsync: out std_logic;
 		vsync: out std_logic;
 		red: out std_logic_vector(2 downto 0);
@@ -46,37 +45,40 @@ end component;
 signal SCL_PLL: STD_LOGIC;
 
 --vga variables
-signal fporch_hor: integer := 16; -- 16 cycles
-signal sync_hor: integer := 112; -- 96 cycles
-signal bporch_hor: integer := 160; -- 48 cycles
-signal fporch_ver: integer := 10; -- 10 cycles
-signal sync_ver: integer := 12; -- 2 cycles
-signal bporch_ver: integer := 45; -- 33 cycles
-signal x: integer := 0;
-signal y: integer := 0;
+signal fporch_hor: natural := 16; -- 16 cycles
+signal sync_hor: natural:= 112; -- 96 cycles
+signal bporch_hor: natural:= 160; -- 48 cycles
+signal fporch_ver: natural:= 10; -- 10 cycles
+signal sync_ver: natural:= 12; -- 2 cycles
+signal bporch_ver: natural:= 45; -- 33 cycles
+signal x: natural range 0 to 1024 := 0;
+signal y: natural range 0 to 1024 := 0;
 signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
 
 --segment screen data
 signal S1: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"FF";
 
---leds
-signal L: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"00";
-
 --keys
-signal DIR: integer := 0;
+signal DIR: natural range 0 to 8 := 0;
+
+-- -2 or +2
+signal MD: integer range -20 to 20 := 0;
+
+-- x or y
+signal OS: integer range 0 to 2 := 0;
 
 --snake
-type MEMORY is array (0 to 127) of INTEGER;
+type MEMORY is array (0 to 128) of INTEGER;
 signal BUFFOR : MEMORY;
-signal SNAKE_LENGTH : INTEGER := 2;
+signal SNAKE_LENGTH : INTEGER range 0 to 256 := 2;
 
 --apple
-signal xa: integer := 0;
-signal ya: integer := 0;
+signal xa: natural range 0 to 1024 := 0;
+signal ya: natural range 0 to 1024 := 0;
 
-signal RESULT: integer := 0;
+signal RESULT: natural range 0 to 128 := 0;
 
-signal COUNTER: integer := 0;
+signal COUNTER: natural range 0 to 25000000 := 0;
 
 type MODE is(INIT, PLAY);
 signal STATE: MODE := INIT;
@@ -120,13 +122,13 @@ end INT_TO_VECTOR;
 
 --random int
 function RND_NUMBER(MIN, MAX : integer) return INTEGER is
-	variable temp: integer := 0;
+	variable temp: natural range 0 to 1024 := 0;
 begin
 	temp := (BUFFOR(0) + MIN) mod 512;
 	if MAX = 480 then
 		temp := temp - 40;
-		if temp > 460 then
-			temp := 460;
+		if temp > 450 then
+			temp := 450;
 		end if;
 		if temp < 10 then
 			temp := 10;
@@ -147,21 +149,16 @@ end RND_NUMBER;
 function DRAW_FIELD(X : INTEGER; Y: INTEGER) return STD_LOGIC_VECTOR is
 	variable color_inside: STD_LOGIC_VECTOR(7 DOWNTO 0) := b"00000010";
 begin
-	
-	--draw snake
-	if x < BUFFOR(0) + 10 and x > BUFFOR(0) - 10 and y < BUFFOR(1) + 10 and y > BUFFOR(1) - 10 then
-		color_inside := b"11000000";
-	end if;
-	
-	--for i in 0 to 4 loop
-		--if x < BUFFOR(i) + 10 and x > BUFFOR(i) - 10 and y < BUFFOR(i+1) + 10 and y > BUFFOR(i+1) - 10 and BUFFOR(i) /= 0 then
-			--color_inside := b"11000000";
-		--end if;
-	--end loop;
+
+	for i in 0 to 127 loop
+		if x < BUFFOR(i) + 10 and x > BUFFOR(i) - 10 and y < BUFFOR(i+1) + 10 and y > BUFFOR(i+1) - 10 and BUFFOR(i) /= 0 then
+			color_inside := b"00011100";
+		end if;
+	end loop;
 	
 	--draw apple
 	if x < xa + 10 and x > xa - 10 and y < ya + 10 and y > ya - 10 then
-		color_inside := b"00111000";
+		color_inside := b"11100011";
 	end if;
 	
 	return color_inside;
@@ -171,7 +168,6 @@ begin
 
 vga_pll: VGAImagePLL port map(CLKIN_IN => SCL, CLKFX_OUT => SCL_PLL);
 
---keyboard proccess
 process(SCL_PLL)
 begin
 if rising_edge(SCL_PLL) then
@@ -180,14 +176,17 @@ COUNTER <= COUNTER + 1;
 
 case STATE is
 
+-- init state, set snake in default position
 when INIT =>
 	BUFFOR(0) <= 320;
 	BUFFOR(1) <= 220;
 	STATE <= PLAY;
 
+-- play state
 when PLAY =>	
 	S1 <= INT_TO_VECTOR(RESULT);
 	
+	-- set direction when button is pressed
 	if LEFT = '0' then
 		DIR <= 0;
 	elsif UP = '0' then
@@ -198,19 +197,26 @@ when PLAY =>
 		DIR <= 3;
 	end if;
 	
-	if COUNTER > 25000*25 then
+	-- move snake once per N millis
+	if COUNTER > 25000*200 then
 		COUNTER <= 0;
 		
 		if DIR = 0 then
-			BUFFOR(0) <= BUFFOR(0) - 2;
+			OS <= 0;
+			MD <= -20;
 		elsif DIR = 1 then
-			BUFFOR(1) <= BUFFOR(1) - 2;
+			OS <= 1;
+			MD <= -20;
 		elsif DIR = 2 then
-			BUFFOR(0) <= BUFFOR(0) + 2;
+			OS <= 0;
+			MD <= 20;
 		elsif DIR = 3 then
-			BUFFOR(1) <= BUFFOR(1) + 2;
+			OS <= 1;
+			MD <= 20;
 		end if;
+		BUFFOR(OS) <= BUFFOR(OS) + MD;
 		
+		--check if screen boreder are riched
 		if BUFFOR(0) < 0 then
 			BUFFOR(0) <= 640;
 		end if;
@@ -230,8 +236,17 @@ when PLAY =>
 		xa <= 0;
 		ya <= 0;
 		RESULT <= RESULT + 1;
+		--BUFFOR(2) <= BUFFOR(0);
+		--BUFFOR(3) <= BUFFOR(1);
+		for i in 125 to 0 loop
+			exit when i > SNAKE_LENGTH;
+			BUFFOR(i+2) <= BUFFOR(i);
+			BUFFOR(i+1) <= BUFFOR(i-1);
+		end loop;
+		BUFFOR(OS) <= BUFFOR(OS) + MD;
 	end if;
 	
+	--random apple position
 	if xa = 0 and ya = 0 then
 		xa <= RND_NUMBER(10, 640);
 		ya <= RND_NUMBER(10, 480);
@@ -291,9 +306,6 @@ end if;
 
 end process;
 
---keyboard process end
-
-LED<=L;
 SEG1<=S1;
 SEG1_EN<='0';
 SEG2_EN<='1';
