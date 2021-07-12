@@ -18,7 +18,6 @@ entity VGAImage is
 		SEG2_EN: out STD_LOGIC;
 		SEG3_EN: out STD_LOGIC;
 		SEG1: out STD_LOGIC_VECTOR(7 DOWNTO 0);
-		LED: out STD_LOGIC_VECTOR(7 DOWNTO 0);
 		ROWS: out STD_LOGIC_VECTOR(3 DOWNTO 0);
 		COLS: in STD_LOGIC_VECTOR(3 DOWNTO 0);
 		hsync: out std_logic;
@@ -43,32 +42,28 @@ end component;
 signal SCL_PLL: STD_LOGIC;
 
 --vga variables
-signal fporch_hor: integer := 16; -- 16 cycles
-signal sync_hor: integer := 96; -- 96 cycles
-signal bporch_hor: integer := 48; -- 48 cycles
-signal fporch_ver: integer := 10; -- 10 cycles
-signal sync_ver: integer := 2; -- 2 cycles
-signal bporch_ver: integer := 33; -- 33 cycles
-signal x: integer := 0;
-signal y: integer := 0;
+signal fporch_hor: natural := 16; -- 16 cycles
+signal sync_hor: natural := 96; -- 96 cycles
+signal bporch_hor: natural := 48; -- 48 cycles
+signal fporch_ver: natural := 10; -- 10 cycles
+signal sync_ver: natural := 2; -- 2 cycles
+signal bporch_ver: natural := 33; -- 33 cycles
+signal x: natural range 0 to 1024 := 0;
+signal y: natural range 0 to 1024 := 0;
 signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
 
 --segment screen data
 signal S1: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"FF";
 
---leds
-signal L: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"00";
-
 --keys
 signal R: STD_LOGIC_VECTOR(3 DOWNTO 0) := x"F";
 signal C: STD_LOGIC_VECTOR(3 DOWNTO 0) := x"F";
-signal KEY: integer := 0;
-signal KEYP: integer := 0;
-signal COUNTER: integer := 0;
+signal KEY: natural range 0 to 20 := 0;
+signal KEYP: natural range 0 to 20 := 0;
+signal COUNTER: natural := 0;
 
 --player
 signal PLAYER: STD_LOGIC := '0';
-signal RESULT: STD_LOGIC := '0';
 
 --fieldmap
 signal FIELD_MAP_PLUS: STD_LOGIC_VECTOR(8 DOWNTO 0) := b"000000000";
@@ -98,14 +93,6 @@ begin
     return b"10000010";
   elsif X = 8 then
 	 return b"10000000";
-  elsif X = 10 then
-	 return b"10000001";
-  elsif X = 11 then
-	 return b"10110000";
-  elsif X = 12 then
-	 return b"11101000";
-  elsif X = 13 then
-	 return b"10010100";
   else
     return b"11111111";
   end if;
@@ -231,72 +218,90 @@ begin
 	--minus for 1
 	if FIELD_MAP_MINUS(0) = '1' then
 		
-		if(y > 60 and y < 80) and (x > 40 and x < 160) then
-			color_inside := b"00011100";
+		if((100-x)*(100-x)+(70-y)*(70-y)) < 2500 then
+			if((100-x)*(100-x)+(70-y)*(70-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 2
 	if FIELD_MAP_MINUS(1) = '1' then
 		
-		if(y > 60 and y < 80) and (x < 380 and x > 260) then
-			color_inside := b"00011100";
+		if((320-x)*(320-x)+(70-y)*(70-y)) < 2500 then
+			if((320-x)*(320-x)+(70-y)*(70-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 3
 	if FIELD_MAP_MINUS(2) = '1' then
 		
-		if(y > 60 and y < 80) and (x < 600 and x > 480) then
-			color_inside := b"00011100";
+		if((540-x)*(540-x)+(70-y)*(70-y)) < 2500 then
+			if((540-x)*(540-x)+(70-y)*(70-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 4
 	if FIELD_MAP_MINUS(3) = '1' then
 		
-		if(y > 220 and y < 240) and (x < 160 and x > 40) then
-			color_inside := b"00011100";
+		if((100-x)*(100-x)+(230-y)*(230-y)) < 2500 then
+			if((100-x)*(100-x)+(230-y)*(230-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 5
 	if FIELD_MAP_MINUS(4) = '1' then
 		
-		if(y > 220 and y < 240) and (x < 380 and x > 260) then
-			color_inside := b"00011100";
+		if((320-x)*(320-x)+(230-y)*(230-y)) < 2500 then
+			if((320-x)*(320-x)+(230-y)*(230-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 6
 	if FIELD_MAP_MINUS(5) = '1' then
 		
-		if(y > 220 and y < 240) and (x < 600 and x > 480) then
-			color_inside := b"00011100";
+		if((540-x)*(540-x)+(230-y)*(230-y)) < 2500 then
+			if((540-x)*(540-x)+(230-y)*(230-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 7
 	if FIELD_MAP_MINUS(6) = '1' then
 		
-		if(y > 380 and y < 400) and (x < 160 and x > 40) then
-			color_inside := b"00011100";
+		if((100-x)*(100-x)+(390-y)*(390-y)) < 2500 then
+			if((100-x)*(100-x)+(390-y)*(390-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 8
 	if FIELD_MAP_MINUS(7) = '1' then
 		
-		if(y > 380 and y < 400) and (x < 380 and x > 260) then
-			color_inside := b"00011100";
+		if((320-x)*(320-x)+(390-y)*(390-y)) < 2500 then
+			if((320-x)*(320-x)+(390-y)*(390-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
 	--minus for 9
 	if FIELD_MAP_MINUS(8) = '1' then
 		
-		if(y > 380 and y < 400) and (x < 600 and x > 480) then
-			color_inside := b"00011100";
+		if((540-x)*(540-x)+(390-y)*(390-y)) < 2500 then
+			if((540-x)*(540-x)+(390-y)*(390-y)) > 1400 then
+				color_inside := b"00011100";
+			end if;
 		end if;
 		
 	end if;
@@ -372,7 +377,7 @@ if rising_edge(SCL_PLL) then
 		KEY <= 13;
 		end if;
 
-	elsif COUNTER <= 12000*50 then
+	else
 		COUNTER <= 0;
 
 	end if;
@@ -382,7 +387,6 @@ if rising_edge(SCL_PLL) then
 	
 	--MARK FIELD
 	if KEYP > 0 then
-		L<=FIELD_MAP_PLUS(7 DOWNTO 0);
 		if PLAYER = '0' then --when plus click
 			if FIELD_MAP_MINUS(KEYP-1) = '0' then
 				FIELD_MAP_PLUS(KEYP-1) <= '1';
@@ -400,77 +404,58 @@ if rising_edge(SCL_PLL) then
 	if (FIELD_MAP_PLUS and b"000000111") = b"000000111" then
 		FIELD_MAP_PLUS <= b"000000111";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"000111000") = b"000111000" then
 		FIELD_MAP_PLUS <= b"000111000";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"111000000") = b"111000000" then
 		FIELD_MAP_PLUS <= b"111000000";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"001001001") = b"001001001" then
 		FIELD_MAP_PLUS <= b"001001001";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"010010010") = b"010010010" then
 		FIELD_MAP_PLUS <= b"010010010";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"100100100") = b"100100100" then
 		FIELD_MAP_PLUS <= b"100100100";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"100010001") = b"100010001" then
 		FIELD_MAP_PLUS <= b"100010001";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_PLUS and b"001010100") = b"001010100" then
 		FIELD_MAP_PLUS <= b"001010100";
 		FIELD_MAP_MINUS <= b"000000000";
-		RESULT <= '1';
 	end if;
 	if (FIELD_MAP_MINUS and b"000000111") = b"000000111" then
 		FIELD_MAP_MINUS <= b"000000111";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"000111000") = b"000111000" then
 		FIELD_MAP_MINUS <= b"000111000";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"111000000") = b"111000000" then
 		FIELD_MAP_MINUS <= b"111000000";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"001001001") = b"001001001" then
 		FIELD_MAP_MINUS <= b"001001001";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"010010010") = b"010010010" then
 		FIELD_MAP_MINUS <= b"010010010";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"100100100") = b"100100100" then
 		FIELD_MAP_MINUS <= b"100100100";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"100010001") = b"100010001" then
 		FIELD_MAP_MINUS <= b"100010001";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	elsif (FIELD_MAP_MINUS and b"001010100") = b"001010100" then
 		FIELD_MAP_MINUS <= b"001010100";
 		FIELD_MAP_PLUS <= b"000000000";
-		RESULT <= '1';
 	end if;
 	
 	--row
 	if x < 640 then
 	hsync <= '1';
 	color <= DRAW_FIELD(x, y);
-	--red <= b"000";
-	--green <= b"100";
-	--blue <= b"00";
 	red <= color(7 DOWNTO 5);
 	green <= color(4 DOWNTO 2);
 	blue <= color(1 DOWNTO 0);
@@ -522,16 +507,6 @@ end process;
 
 --keyboard process end
 
---width: 640px
---height: 480px
---signal fporch_hor: integer := 16; -- 16 cycles
---signal sync_hor: integer := 96; -- 96 cycles
---signal bporch_hor: integer := 48; -- 48 cycles
---signal fporch_ver: integer := 10; -- 10 cycles
---signal sync_ver: integer := 2; -- 2 cycles
---signal bporch_ver: integer := 33; -- 33 cycles
-
-LED<=L;
 SEG1<=S1;
 SEG1_EN<='0';
 SEG2_EN<='1';
