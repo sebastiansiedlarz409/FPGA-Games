@@ -284,6 +284,7 @@ if RST = '0' then
 	STATE <= INIT;
 	xa <= 0;
 	ya <= 0;
+	RESULT <= 0;
 end if;
 
 end if;
