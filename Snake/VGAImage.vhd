@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
-use IEEE.math_real.all;
+--use IEEE.math_real.all;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -45,12 +45,12 @@ end component;
 signal SCL_PLL: STD_LOGIC;
 
 --vga variables
-signal fporch_hor: natural := 16; -- 16 cycles
-signal sync_hor: natural:= 112; -- 96 cycles
-signal bporch_hor: natural:= 160; -- 48 cycles
-signal fporch_ver: natural:= 10; -- 10 cycles
-signal sync_ver: natural:= 12; -- 2 cycles
-signal bporch_ver: natural:= 45; -- 33 cycles
+signal fporch_hor: natural range 0 to 2000 := 16; -- 16 cycles
+signal sync_hor: natural range 0 to 2000:= 112; -- 96 cycles
+signal bporch_hor: natural range 0 to 2000:= 160; -- 48 cycles
+signal fporch_ver: natural range 0 to 2000:= 10; -- 10 cycles
+signal sync_ver: natural range 0 to 2000:= 12; -- 2 cycles
+signal bporch_ver: natural range 0 to 2000:= 45; -- 33 cycles
 signal x: natural range 0 to 1024 := 0;
 signal y: natural range 0 to 1024 := 0;
 signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
@@ -59,18 +59,18 @@ signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
 signal S1: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"FF";
 
 --keys
-signal DIR: natural range 0 to 8 := 0;
+signal DIR: natural range 0 to 4 := 0;
 
 -- -2 or +2
 signal MD: integer range -20 to 20 := 0;
 
 -- x or y
-signal OS: integer range 0 to 2 := 0;
+signal OS: natural range 0 to 2 := 0;
 
 --snake
-type MEMORY is array (0 to 128) of INTEGER;
-signal BUFFOR : MEMORY;
-signal SNAKE_LENGTH : INTEGER range 0 to 256 := 2;
+type MEMORY is array (0 to 127) of INTEGER range 0 to 800;
+signal BUFFOR : MEMORY := (others=>0);
+signal SL : integer range 0 to 127 := 6;
 
 --apple
 signal xa: natural range 0 to 1024 := 0;
@@ -121,7 +121,7 @@ begin
 end INT_TO_VECTOR;
 
 --random int
-function RND_NUMBER(MIN, MAX : integer) return INTEGER is
+impure function RND_NUMBER(MIN, MAX : integer) return INTEGER is
 	variable temp: natural range 0 to 1024 := 0;
 begin
 	temp := (BUFFOR(0) + MIN) mod 512;
@@ -146,12 +146,13 @@ begin
 end RND_NUMBER;
 
 --this function draw field and player
-function DRAW_FIELD(X : INTEGER; Y: INTEGER) return STD_LOGIC_VECTOR is
+impure function DRAW_FIELD(X : INTEGER; Y: INTEGER) return STD_LOGIC_VECTOR is
 	variable color_inside: STD_LOGIC_VECTOR(7 DOWNTO 0) := b"00000010";
 begin
-
+	
+	--draw snake
 	for i in 0 to 127 loop
-		if x < BUFFOR(i) + 10 and x > BUFFOR(i) - 10 and y < BUFFOR(i+1) + 10 and y > BUFFOR(i+1) - 10 and BUFFOR(i) /= 0 then
+		if (i mod 2) = 0 and x < BUFFOR(i) + 10 and x > BUFFOR(i) - 10 and y < BUFFOR(i+1) + 10 and y > BUFFOR(i+1) - 10 and BUFFOR(i) /= 0 then
 			color_inside := b"00011100";
 		end if;
 	end loop;
@@ -180,6 +181,12 @@ case STATE is
 when INIT =>
 	BUFFOR(0) <= 320;
 	BUFFOR(1) <= 220;
+	
+	BUFFOR(2) <= 340;
+	BUFFOR(3) <= 220;
+	
+	BUFFOR(4) <= 360;
+	BUFFOR(5) <= 220;
 	STATE <= PLAY;
 
 -- play state
@@ -187,13 +194,13 @@ when PLAY =>
 	S1 <= INT_TO_VECTOR(RESULT);
 	
 	-- set direction when button is pressed
-	if LEFT = '0' then
+	if LEFT = '0' and DIR /= 2 then
 		DIR <= 0;
-	elsif UP = '0' then
+	elsif UP = '0' and DIR /= 3 then
 		DIR <= 1;
-	elsif RIGHT = '0' then
+	elsif RIGHT = '0' and DIR /= 0 then
 		DIR <= 2;
-	elsif DOWN = '0' then
+	elsif DOWN = '0' and DIR /= 1 then
 		DIR <= 3;
 	end if;
 	
@@ -214,36 +221,33 @@ when PLAY =>
 			OS <= 1;
 			MD <= 20;
 		end if;
-		BUFFOR(OS) <= BUFFOR(OS) + MD;
+		
+		for i in 0 to 124 loop
+			BUFFOR(i+2) <= BUFFOR(i);
+			BUFFOR(i+3) <= BUFFOR(i+1);
+		end loop;
+		BUFFOR(SL) <= 0;
+		BUFFOR(SL+1) <= 0;
+		BUFFOR(OS) <= BUFFOR(OS) + MD;		
 		
 		--check if screen boreder are riched
-		if BUFFOR(0) < 0 then
-			BUFFOR(0) <= 640;
-		end if;
-		if BUFFOR(0) > 640 then
-			BUFFOR(0) <= 0;
-		end if;
-		if BUFFOR(1) < 0 then
-			BUFFOR(1) <= 480;
-		end if;
-		if BUFFOR(1) > 480 then
-			BUFFOR(1) <= 0;
+		if BUFFOR(0) < 10 or BUFFOR(0) > 620 or BUFFOR(1) < 20 or BUFFOR(1) > 460 then
+			DIR <= 0;
+			BUFFOR <= (others=>0);
+			STATE <= INIT;
+			xa <= 0;
+			ya <= 0;
+			SL <= 6;
+			RESULT <= 0;
 		end if;
 	end if;
 	
 	--check if apple hit
-	if (BUFFOR(0) < (xa + 20) and BUFFOR(0) > (xa - 20)) and (BUFFOR(1) < (ya + 20) and BUFFOR(1) > (ya - 20)) then
+	if BUFFOR(0) < (xa + 20) and BUFFOR(0) > (xa - 20) and BUFFOR(1) < (ya + 20) and BUFFOR(1) > (ya - 20) then
 		xa <= 0;
 		ya <= 0;
+		SL <= SL + 2;
 		RESULT <= RESULT + 1;
-		--BUFFOR(2) <= BUFFOR(0);
-		--BUFFOR(3) <= BUFFOR(1);
-		for i in 125 to 0 loop
-			exit when i > SNAKE_LENGTH;
-			BUFFOR(i+2) <= BUFFOR(i);
-			BUFFOR(i+1) <= BUFFOR(i-1);
-		end loop;
-		BUFFOR(OS) <= BUFFOR(OS) + MD;
 	end if;
 	
 	--random apple position
@@ -296,9 +300,12 @@ when PLAY =>
 end case;
 
 if RST = '0' then
+	DIR <= 0;
+	BUFFOR <= (others=>0);
 	STATE <= INIT;
 	xa <= 0;
 	ya <= 0;
+	SL <= 6;
 	RESULT <= 0;
 end if;
 
