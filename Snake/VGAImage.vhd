@@ -7,12 +7,12 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity VGAImage is
 	generic(
-		fporch_hor: natural range 0 to 2000 := 16; -- 16 cycles
-		sync_hor: natural range 0 to 2000:= 112; -- 96 cycles
-		bporch_hor: natural range 0 to 2000:= 160; -- 48 cycles
-		fporch_ver: natural range 0 to 2000:= 10; -- 10 cycles
-		sync_ver: natural range 0 to 2000:= 12; -- 2 cycles
-		bporch_ver: natural range 0 to 2000:= 45 -- 33 cycles
+		fporch_hor: natural range 0 to 1023 := 16; -- 16 cycles
+		sync_hor: natural range 0 to 1023:= 112; -- 96 cycles
+		bporch_hor: natural range 0 to 1023:= 160; -- 48 cycles
+		fporch_ver: natural range 0 to 1023:= 10; -- 10 cycles
+		sync_ver: natural range 0 to 1023:= 12; -- 2 cycles
+		bporch_ver: natural range 0 to 1023:= 45 -- 33 cycles
 	);
 	port(
 		SCL: in STD_LOGIC;
@@ -50,9 +50,6 @@ signal SCL_PLL: STD_LOGIC;
 signal x: natural range 0 to 1023 := 0;
 signal y: natural range 0 to 1023 := 0;
 signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
-
---segment screen data
-signal S1: STD_LOGIC_VECTOR(7 DOWNTO 0) := x"FF";
 
 --movement direction 0 left, 1 top, 2 right, 4 down
 signal DIR: natural range 0 to 4 := 0;
@@ -194,7 +191,7 @@ when INIT =>
 
 -- play state
 when PLAY =>	
-	S1 <= INT_TO_VECTOR(RESULT);
+	SEG1 <= INT_TO_VECTOR(RESULT);
 	
 	-- set direction when button is pressed
 	if LEFT = '0' and DIR /= 2 then
@@ -314,7 +311,6 @@ end if;
 
 end process;
 
-SEG1<=S1;
 SEG1_EN<='0';
 SEG2_EN<='1';
 SEG3_EN<='1';
