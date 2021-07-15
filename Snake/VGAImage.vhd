@@ -55,13 +55,13 @@ signal color: STD_LOGIC_VECTOR(7 DOWNTO 0);
 signal DIR: natural range 0 to 4 := 0;
 
 --how many add or sub
-signal MD: integer range -20 to 20 := -20;
+signal MD: integer range -16 to 16 := -16;
 
 --x or y should be modified
 signal OS: natural range 0 to 1 := 0;
 
 --snake
-type MEMORY is array (0 to 15) of INTEGER range 0 to 620;
+type MEMORY is array (0 to 25) of INTEGER range 0 to 620;
 signal BUFFOR : MEMORY := (others=>0);
 
 --how long snake is (2x)
@@ -120,7 +120,7 @@ end INT_TO_VECTOR;
 
 --random int
 impure function RND_NUMBER(MIN, MAX : integer) return INTEGER is
-	variable temp: natural range 0 to 1024 := 0;
+	variable temp: natural range 0 to 1023 := 0;
 begin
 	temp := (BUFFOR(0) + MIN) mod 512;
 	if MAX = 480 then
@@ -128,16 +128,16 @@ begin
 		if temp > 450 then
 			temp := 450;
 		end if;
-		if temp < 10 then
-			temp := 10;
+		if temp < 20 then
+			temp := 20;
 		end if;
 	else
 		temp := temp + 100;
 		if temp > 620 then
 			temp := 620;
 		end if;
-		if temp < 10 then
-			temp := 10;
+		if temp < 20 then
+			temp := 20;
 		end if;
 	end if;
 	return temp;
@@ -149,14 +149,14 @@ impure function DRAW_FIELD(X : INTEGER; Y: INTEGER) return STD_LOGIC_VECTOR is
 begin
 	
 	--draw snake
-	for i in 0 to 14 loop
-		if (i mod 2) = 0 and x < BUFFOR(i) + 10 and x > BUFFOR(i) - 10 and y < BUFFOR(i+1) + 10 and y > BUFFOR(i+1) - 10 and BUFFOR(i) /= 0 then
+	for i in 0 to 24 loop
+		if (i mod 2) = 0 and x < BUFFOR(i) + 8 and x > BUFFOR(i) - 8 and y < BUFFOR(i+1) + 8 and y > BUFFOR(i+1) - 8 and BUFFOR(i) /= 0 then
 			color_inside := b"00011100";
 		end if;
 	end loop;
 	
 	--draw apple
-	if x < xa + 10 and x > xa - 10 and y < ya + 10 and y > ya - 10 then
+	if x < xa + 8 and x > xa - 8 and y < ya + 8 and y > ya - 8 then
 		color_inside := b"11100011";
 	end if;
 	
@@ -210,19 +210,19 @@ when PLAY =>
 		
 		if DIR = 0 then
 			OS <= 0;
-			MD <= -20;
+			MD <= -16;
 		elsif DIR = 1 then
 			OS <= 1;
-			MD <= -20;
+			MD <= -16;
 		elsif DIR = 2 then
 			OS <= 0;
-			MD <= 20;
+			MD <= 16;
 		elsif DIR = 3 then
 			OS <= 1;
-			MD <= 20;
+			MD <= 16;
 		end if;
 		
-		for i in 0 to 12 loop
+		for i in 0 to 22 loop
 			BUFFOR(i+2) <= BUFFOR(i);
 			BUFFOR(i+3) <= BUFFOR(i+1);
 		end loop;
@@ -236,13 +236,13 @@ when PLAY =>
 			STATE <= INIT;
 			xa <= 0;
 			ya <= 0;
-			SL <= 6;
+			SL <= 2;
 			RESULT <= 0;
 		end if;
 	end if;
 	
 	--check if apple hit
-	if BUFFOR(0) < (xa + 20) and BUFFOR(0) > (xa - 20) and BUFFOR(1) < (ya + 20) and BUFFOR(1) > (ya - 20) then
+	if BUFFOR(0) < (xa + 16) and BUFFOR(0) > (xa - 16) and BUFFOR(1) < (ya + 16) and BUFFOR(1) > (ya - 16) then
 		xa <= 0;
 		ya <= 0;
 		SL <= SL + 2;
@@ -303,7 +303,7 @@ if RST = '0' then
 	STATE <= INIT;
 	xa <= 0;
 	ya <= 0;
-	SL <= 6;
+	SL <= 2;
 	RESULT <= 0;
 end if;
 
