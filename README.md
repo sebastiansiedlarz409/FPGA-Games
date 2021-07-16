@@ -1,6 +1,6 @@
 # Some simple 2D games on FPGA
 
-Project created for the purpose of learning the VHDL language. There is 3 gmaes:
+Project created for the purpose of learning the VHDL language. There is 3 games:
 * TicTacToe (Two players)
 * Snake
 * PingPong (Two players)
